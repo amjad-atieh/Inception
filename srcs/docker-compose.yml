@@ -1,0 +1,46 @@
+
+services:
+  nginx:
+    build: 
+      context:  ./requirements/nginx
+    ports:
+      - 8080:80
+      - 443:443
+    networks:
+      - webnet
+  mariadb:
+    build:
+      context: ./requirements/mariadb
+      args:
+        - name=value
+    ports:
+      - 3306:3306
+    environment:
+      MARIADB_DATABASE: ${MARIADB_DATABASE}
+      MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD}
+    # volumes:
+    networks:
+      - webnet
+
+  wordpress:
+    build:
+      context: ./requirements/wordpress
+    volumes:
+      - wordpress_data:/var/www/html
+    environment:
+      WORDPRESS_DB_HOST: mariadb:3306
+      WORDPRESS_DB_NAME: mydb
+      WORDPRESS_DB_USER: ${WORDPRESS_DB_USER}
+      WORDPRESS_DB_PASSWORD: ${WORDPRESS_DB_PASSWORD}
+      MARIADB_DATABASE: ${MARIADB_DATABASE}
+      MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD}
+    ports:
+      - 9000:9000
+    networks:
+      - webnet
+
+volumes:
+  wordpress_data:
+
+networks:
+  webnet:
