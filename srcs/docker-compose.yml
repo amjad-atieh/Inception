@@ -1,12 +1,26 @@
+volumes:
+  mariadb_data:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/${INTRA}/data/volumes/mariadb
+      o: bind
+  wordpress_data:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/${INTRA}/data/volumes/wordpress
+      o: bind
+
 services:
   wordpress:
     build: ./requirements/wordpress
     container_name: wordpress
+    restart: unless-stopped
     environment:
       MYSQL_NAME: ${MYSQL_NAME}
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-      MYSQL_HOST: ${MYSQL_HOST}
       WP_HOST: ${WP_HOST}
       WP_SITEURL: ${WP_SITEURL}
     networks:
@@ -15,13 +29,13 @@ services:
       - wordpress_data:/var/www/html
   mariadb:
     build: ./requirements/mariadb
-    container_name: ${MYSQL_HOST}
+    container_name: mariadb
+    restart: unless-stopped
     environment:
       MYSQL_NAME: ${MYSQL_NAME}
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      MYSQL_HOST: ${MYSQL_HOST}
     networks:
       - webnet
     volumes:
@@ -29,6 +43,7 @@ services:
   nginx:
     build: ./requirements/nginx
     container_name: nginx
+    restart: unless-stopped
     ports:
     - 443:443
     networks:
@@ -38,7 +53,3 @@ services:
 
 networks:
   webnet:
-
-volumes:
-  mariadb_data:
-  wordpress_data:

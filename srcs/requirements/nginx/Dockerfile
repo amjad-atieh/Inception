@@ -8,5 +8,4 @@ RUN  apk update && apk add nginx openssl && rm -rf /var/cache/apk/* \
 COPY default.conf /etc/nginx/http.d/default.conf
 
 ENTRYPOINT ["/certGen.sh"]
-# CMD ["tail", "-f", "/dev/null"]
 CMD ["nginx", "-g", "daemon off;"]

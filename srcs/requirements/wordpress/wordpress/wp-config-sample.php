@@ -29,7 +29,7 @@ define( 'DB_USER', '${MYSQL_USER}' );
 define( 'DB_PASSWORD', '${MYSQL_PASSWORD}' );
 
 /** Database hostname */
-define( 'DB_HOST', '${MYSQL_HOST}' );
+define( 'DB_HOST', 'mariadb' );
 
 define('WP_HOME','${WP_HOST}');
 define('WP_SITEURL','${WP_SITEURL}');

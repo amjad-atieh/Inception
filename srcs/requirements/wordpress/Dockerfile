@@ -11,5 +11,4 @@ RUN apk update && apk add php84 php84-fpm php84-mysqli php84-json \
 COPY www.conf /etc/php84/php-fpm.d/www.conf
 
 ENTRYPOINT ["/startup.sh"]
-# CMD ["tail", "-f", "/dev/null"]
 CMD ["php-fpm84", "--nodaemonize"]

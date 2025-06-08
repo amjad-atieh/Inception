@@ -1,5 +1,6 @@
 SRCS = ./srcs
 COMPOSE = docker compose -f $(SRCS)/docker-compose.yml
+INTRA = aatieh
 
 up:
 	$(COMPOSE) up -d
@@ -8,12 +9,12 @@ down:
 	$(COMPOSE) down
 
 build:
-	# $(SRCS)/certGen.sh
+	mkdir -p /home/$(INTRA)/data/volumes/wordpress
+	mkdir -p /home/$(INTRA)/data/volumes/mariadb
 	$(COMPOSE) up --build -d
 
 clean:
 	$(COMPOSE) down -v
-	# rm -fr $(SRCS)/requirements/nginx/certs
 
 fclean: clean
 
