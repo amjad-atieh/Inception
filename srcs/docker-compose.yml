@@ -1,46 +1,44 @@
-
 services:
-  nginx:
-    build: 
-      context:  ./requirements/nginx
-    ports:
-      - 8080:80
-      - 443:443
-    networks:
-      - webnet
-  mariadb:
-    build:
-      context: ./requirements/mariadb
-      args:
-        - name=value
-    ports:
-      - 3306:3306
-    environment:
-      MARIADB_DATABASE: ${MARIADB_DATABASE}
-      MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD}
-    # volumes:
-    networks:
-      - webnet
-
   wordpress:
-    build:
-      context: ./requirements/wordpress
+    build: ./requirements/wordpress
+    container_name: wordpress
+    environment:
+      MYSQL_NAME: ${MYSQL_NAME}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_HOST: ${MYSQL_HOST}
+      WP_HOST: ${WP_HOST}
+      WP_SITEURL: ${WP_SITEURL}
+    networks:
+      - webnet
     volumes:
       - wordpress_data:/var/www/html
+  mariadb:
+    build: ./requirements/mariadb
+    container_name: ${MYSQL_HOST}
     environment:
-      WORDPRESS_DB_HOST: mariadb:3306
-      WORDPRESS_DB_NAME: mydb
-      WORDPRESS_DB_USER: ${WORDPRESS_DB_USER}
-      WORDPRESS_DB_PASSWORD: ${WORDPRESS_DB_PASSWORD}
-      MARIADB_DATABASE: ${MARIADB_DATABASE}
-      MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD}
-    ports:
-      - 9000:9000
+      MYSQL_NAME: ${MYSQL_NAME}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_HOST: ${MYSQL_HOST}
     networks:
       - webnet
-
-volumes:
-  wordpress_data:
+    volumes:
+      - mariadb_data:/var/lib/mysql
+  nginx:
+    build: ./requirements/nginx
+    container_name: nginx
+    ports:
+    - 443:443
+    networks:
+      - webnet
+    volumes:
+      - wordpress_data:/var/www/html
 
 networks:
   webnet:
+
+volumes:
+  mariadb_data:
+  wordpress_data:

@@ -1,10 +1,12 @@
 FROM alpine:3.21
 
-RUN  apk update && apk add nginx && rm -rf /var/cache/apk/*
+COPY certGen.sh /certGen.sh
 
-COPY ./certs /etc/certs
-COPY nginx.conf /etc/nginx/nginx.conf
-COPY my.conf /etc/nginx/http.d/my.conf
-COPY index.html /index.html
+RUN  apk update && apk add nginx openssl && rm -rf /var/cache/apk/* \
+	&& chmod  +x /certGen.sh
+	
+COPY default.conf /etc/nginx/http.d/default.conf
 
+ENTRYPOINT ["/certGen.sh"]
+# CMD ["tail", "-f", "/dev/null"]
 CMD ["nginx", "-g", "daemon off;"]
