@@ -1,5 +1,7 @@
 #!/bin/sh
 
+envsubst < /my.cnf > /etc/my.cnf
+
 if [ ! -d "/var/lib/mysql/mysql" ]; then
   echo "Initializing database..."
   mysql_install_db --user=mysql --basedir=/usr --datadir=/var/lib/mysql

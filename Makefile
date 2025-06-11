@@ -17,7 +17,8 @@ clean:
 	$(COMPOSE) down -v
 
 fclean: clean
+	rm -fr /home/aatieh/data/volumes/*/*
 
-re: clean build
+re: fclean build
 
 .PHONY: up down build clean fclean re
