@@ -27,9 +27,9 @@ done
 echo "Database is up and running!"
 
 
-wp core install --path=$WP_ROOT --url=$WP_SITEURL --title=inception --admin_user=Amjad --admin_email=amjdsalh@gmail.com --admin_password=strongadminpass
+wp core install --path=$WP_ROOT --url=$WP_SITEURL --title=inception --admin_user=$WP_ADMIN_USER --admin_email=$WP_ADMIN_EMAIL --admin_password=$WP_ADMIN_PASS
 
-wp user create $INTRA $INTRA@student.42amman.com  --path=$WP_ROOT --role=author --user_pass=strongpassword1
+wp user create $WP_USER $INTRA@student.42amman.com  --path=$WP_ROOT --role=author --user_pass=$WP_USER_PASS
 
 exec "$@"
 

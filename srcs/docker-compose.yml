@@ -15,6 +15,7 @@ volumes:
 services:
   wordpress:
     build: ./requirements/wordpress
+    image: wordpress:inception
     container_name: wordpress
     restart: unless-stopped
     environment:
@@ -25,12 +26,18 @@ services:
       WP_HOST: ${WP_HOST}
       WP_SITEURL: ${WP_SITEURL}
       INTRA: ${INTRA}
+      WP_ADMIN_EMAIL: ${WP_ADMIN_EMAIL}
+      WP_ADMIN_PASS: ${WP_ADMIN_PASS}
+      WP_ADMIN_USER: ${WP_ADMIN_USER}
+      WP_USER_PASS: ${WP_USER_PASS}
+      WP_USER: ${WP_USER}
     networks:
       - webnet
     volumes:
       - wordpress_data:/var/www/html
   mariadb:
     build: ./requirements/mariadb
+    image: mariadb:inception
     container_name: mariadb
     restart: unless-stopped
     environment:
@@ -45,6 +52,7 @@ services:
       - mariadb_data:/var/lib/mysql
   nginx:
     build: ./requirements/nginx
+    image: nginx:inception
     container_name: nginx
     restart: unless-stopped
     ports:
