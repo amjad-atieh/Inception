@@ -1,9 +1,5 @@
-*.log
 .env
 .vscode
 .vscode/*
 
-# SSL certificates
-*.crt
-*.key
-certs/
+secrets
