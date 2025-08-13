@@ -18,19 +18,12 @@ services:
     image: wordpress:inception
     container_name: wordpress
     restart: unless-stopped
-    environment:
-      MYSQL_PORT: ${MYSQL_PORT}
-      MYSQL_NAME: ${MYSQL_NAME}
-      MYSQL_USER: ${MYSQL_USER}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-      WP_HOST: ${WP_HOST}
-      WP_SITEURL: ${WP_SITEURL}
-      INTRA: ${INTRA}
-      WP_ADMIN_EMAIL: ${WP_ADMIN_EMAIL}
-      WP_ADMIN_PASS: ${WP_ADMIN_PASS}
-      WP_ADMIN_USER: ${WP_ADMIN_USER}
-      WP_USER_PASS: ${WP_USER_PASS}
-      WP_USER: ${WP_USER}
+    env_file:
+      - .env
+    secrets:
+      - db_pass
+      - wp_admin_pass
+      - wp_user_pass
     networks:
       - webnet
     volumes:
@@ -40,23 +33,22 @@ services:
     image: mariadb:inception
     container_name: mariadb
     restart: unless-stopped
-    environment:
-      MYSQL_PORT: ${MYSQL_PORT}
-      MYSQL_NAME: ${MYSQL_NAME}
-      MYSQL_USER: ${MYSQL_USER}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    env_file:
+      - .env
     networks:
       - webnet
     volumes:
       - mariadb_data:/var/lib/mysql
+    secrets:
+      - db_pass
+      - db_root_pass
   nginx:
     build: ./requirements/nginx
     image: nginx:inception
     container_name: nginx
     restart: unless-stopped
     ports:
-    - 443:443
+      - 443:443
     networks:
       - webnet
     volumes:
@@ -64,3 +56,14 @@ services:
 
 networks:
   webnet:
+
+
+secrets:
+  db_root_pass:
+    file: ../secrets/db_root_pass
+  db_pass:
+    file: ../secrets/db_pass
+  wp_user_pass:
+    file: ../secrets/wp_user_pass
+  wp_admin_pass:
+    file: ../secrets/wp_admin_pass
