@@ -17,7 +17,6 @@ sed -i "s/ = 'wp_';/\$table_prefix = 'wp_';/" $WP_ROOT/wp-config.php
 host=$DB_NAME
 port=$DB_PORT
 
-
 echo "Waiting for WordPress to be installed/ready..."
 timeout=120
 start_time=$(date +%s)
@@ -35,9 +34,15 @@ done
 echo "Database is up and running!"
 
 
+
 wp core install --path=$WP_ROOT --url=$WP_SITEURL --title=inception --admin_user=$WP_ADMIN_USER --admin_email=$WP_ADMIN_EMAIL --admin_password=$WP_ADMIN_PASS
 
 wp user create $WP_USER $INTRA@student.42amman.com  --path=$WP_ROOT --role=author --user_pass=$WP_USER_PASS
 
-exec "$@"
+wp plugin install redis-cache --path=$WP_ROOT
 
+wp plugin activate redis-cache --path=$WP_ROOT
+
+wp redis enable --path=$WP_ROOT
+
+exec "$@"

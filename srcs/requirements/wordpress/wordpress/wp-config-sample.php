@@ -42,6 +42,21 @@ define( 'DB_CHARSET', 'utf8' );
 /** The database collate type. Don't change this if in doubt. */
 define( 'DB_COLLATE', '' );
 
+// adjust Redis host and port if necessary 
+define( 'WP_REDIS_HOST', 'redis' );
+define( 'WP_REDIS_PORT', '${REDIS_PORT}');
+
+// change the prefix and database for each site to avoid cache data collisions
+define( 'WP_REDIS_PREFIX', 'inception-site' );
+define( 'WP_REDIS_DATABASE', 0 ); // 0-15
+
+// reasonable connection and read+write timeouts
+define( 'WP_REDIS_TIMEOUT', 1 );
+define( 'WP_REDIS_READ_TIMEOUT', 1 );
+
+define( 'WP_CACHE_KEY_SALT', 'aatieh.42.fr' );
+define( 'WP_CACHE', true );
+
 /**#@+
  * Authentication unique keys and salts.
  *
@@ -90,7 +105,8 @@ $table_prefix = 'wp_';
  *
  * @link https://developer.wordpress.org/advanced-administration/debug/debug-wordpress/
  */
-define( 'WP_DEBUG', false );
+define( 'WP_DEBUG', true );
+define( 'WP_DEBUG_LOG', true );
 
 /* Add any custom values between this line and the "stop editing" line. */
 

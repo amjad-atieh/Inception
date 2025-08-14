@@ -17,6 +17,9 @@ services:
     build: ./requirements/wordpress
     image: wordpress:inception
     container_name: wordpress
+    depends_on:
+      - mariadb
+      - redis
     restart: unless-stopped
     env_file:
       - .env
@@ -53,6 +56,15 @@ services:
       - webnet
     volumes:
       - wordpress_data:/var/www/html
+  redis:
+    build: ./bonus/redis
+    image: redis:inception
+    container_name: redis
+    networks:
+      - webnet
+    restart: unless-stopped
+    environment:
+      REDIS_PORT: ${REDIS_PORT}
 
 networks:
   webnet:
