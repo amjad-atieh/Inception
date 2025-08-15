@@ -67,6 +67,17 @@ services:
     restart: unless-stopped
     environment:
       REDIS_PORT: ${REDIS_PORT}
+  ftp:
+    build: ./bonus/ftp
+    image: ftp:inception
+    container_name: ftp
+    networks:
+      - webnet
+    restart: unless-stopped
+    ports:
+      - 21:21
+    volumes:
+      - wordpress_data:/var/www/html
 
 networks:
   webnet:
