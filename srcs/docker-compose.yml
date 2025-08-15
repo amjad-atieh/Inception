@@ -41,7 +41,7 @@ services:
     networks:
       - webnet
     volumes:
-      - mariadb_data:/var/lib/mysql
+      - mariadb_data:/var/lib/mariadb
     secrets:
       - db_pass
       - db_root_pass
@@ -50,6 +50,8 @@ services:
     image: nginx:inception
     container_name: nginx
     restart: unless-stopped
+    depends_on:
+      - wordpress
     ports:
       - 443:443
     networks:
