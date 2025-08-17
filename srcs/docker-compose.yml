@@ -67,10 +67,12 @@ services:
     restart: unless-stopped
     environment:
       REDIS_PORT: ${REDIS_PORT}
-  ftp:
-    build: ./bonus/ftp
-    image: ftp:inception
-    container_name: ftp
+  proftpd:
+    build: ./bonus/proftpd
+    image: proftpd:inception
+    container_name: proftpd
+    depends_on:
+      - wordpress
     networks:
       - webnet
     restart: unless-stopped
@@ -78,6 +80,10 @@ services:
       - 21:21
     volumes:
       - wordpress_data:/var/www/html
+    environment:
+      - INTRA=${INTRA}
+    secrets:
+      - ftp_pass
 
 networks:
   webnet:
@@ -92,3 +98,5 @@ secrets:
     file: ../secrets/wp_user_pass
   wp_admin_pass:
     file: ../secrets/wp_admin_pass
+  ftp_pass:
+    file: ../secrets/ftp_pass
