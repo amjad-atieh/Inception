@@ -97,6 +97,17 @@ services:
     networks:
       - webnet
     restart: unless-stopped
+  adminer:
+    build: ./bonus/adminer
+    image: adminer:inception
+    container_name: adminer
+    networks:
+      - webnet
+    restart: unless-stopped
+    volumes:
+      - wordpress_data:/var/www/html
+    depends_on:
+      - wordpress
 
 networks:
   webnet:
