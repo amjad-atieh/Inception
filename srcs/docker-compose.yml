@@ -11,11 +11,11 @@ volumes:
       type: none
       device: /home/${INTRA}/data/volumes/wordpress
       o: bind
-  calculator_files:
+  adminer_data:
     driver: local
     driver_opts:
       type: none
-      device: /home/${INTRA}/data/volumes/calculator
+      device: /home/${INTRA}/data/volumes/adminer
       o: bind
 
 services:
@@ -64,6 +64,7 @@ services:
       - webnet
     volumes:
       - wordpress_data:/var/www/html
+      - adminer_data:/var/www/adminer
   redis:
     build: ./bonus/redis
     image: redis:inception
@@ -105,9 +106,7 @@ services:
       - webnet
     restart: unless-stopped
     volumes:
-      - wordpress_data:/var/www/html
-    depends_on:
-      - wordpress
+      - adminer_data:/var/www/adminer
 
 networks:
   webnet:

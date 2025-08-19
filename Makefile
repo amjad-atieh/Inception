@@ -5,6 +5,7 @@ INTRA = aatieh
 build:
 	mkdir -p /home/$(INTRA)/data/volumes/wordpress
 	mkdir -p /home/$(INTRA)/data/volumes/mariadb
+	mkdir -p /home/$(INTRA)/data/volumes/adminer
 	$(COMPOSE) up --build -d
 
 up:
