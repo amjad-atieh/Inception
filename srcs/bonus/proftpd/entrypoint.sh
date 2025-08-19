@@ -7,4 +7,6 @@ ${FTP_PASS}
 ${FTP_PASS}
 EOF
 
+sudo chmod u+w /path/to/folder
+
 exec "$@"
