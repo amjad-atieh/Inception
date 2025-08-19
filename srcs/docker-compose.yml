@@ -107,6 +107,13 @@ services:
     restart: unless-stopped
     volumes:
       - adminer_data:/var/www/adminer
+  netdata:
+    build: ./bonus/netdata
+    image: netdata:inception
+    container_name: netdata
+    networks:
+      - webnet
+    restart: unless-stopped
 
 networks:
   webnet:

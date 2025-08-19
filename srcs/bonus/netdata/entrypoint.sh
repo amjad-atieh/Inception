@@ -1,0 +1,5 @@
+#!/bin/sh
+
+netdata
+
+exec "$@"
