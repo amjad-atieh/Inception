@@ -11,6 +11,12 @@ volumes:
       type: none
       device: /home/${INTRA}/data/volumes/wordpress
       o: bind
+  calculator_files:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/${INTRA}/data/volumes/calculator
+      o: bind
 
 services:
   wordpress:
@@ -84,6 +90,13 @@ services:
       - INTRA=${INTRA}
     secrets:
       - ftp_pass
+  httpd:
+    build: ./bonus/httpd
+    image: httpd:inception
+    container_name: httpd
+    networks:
+      - webnet
+    restart: unless-stopped
 
 networks:
   webnet:
