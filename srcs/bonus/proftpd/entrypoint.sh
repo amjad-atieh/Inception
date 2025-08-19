@@ -7,6 +7,4 @@ ${FTP_PASS}
 ${FTP_PASS}
 EOF
 
-chown -R ${INTRA}:${INTRA} /var/www/html
-
 exec "$@"
