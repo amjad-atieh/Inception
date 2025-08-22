@@ -1,5 +1,0 @@
-#!/bin/sh
-
-netdata
-
-exec "$@"

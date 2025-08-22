@@ -121,12 +121,12 @@ networks:
 
 secrets:
   db_root_pass:
-    file: ./secrets/db_root_pass
+    file: ../secrets/db_root_pass
   db_pass:
-    file: ./secrets/db_pass
+    file: ../secrets/db_pass
   wp_user_pass:
-    file: ./secrets/wp_user_pass
+    file: ../secrets/wp_user_pass
   wp_admin_pass:
-    file: ./secrets/wp_admin_pass
+    file: ../secrets/wp_admin_pass
   ftp_pass:
-    file: ./secrets/ftp_pass
+    file: ../secrets/ftp_pass
