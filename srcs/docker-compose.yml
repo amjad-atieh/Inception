@@ -1,22 +1,22 @@
 volumes:
   mariadb_data:
-    driver: local
-    driver_opts:
-      type: none
-      device: /home/${INTRA}/data/volumes/mariadb
-      o: bind
+    # driver: local
+    # driver_opts:
+    #   type: none
+    #   device: /home/${INTRA}/data/volumes/mariadb
+    #   o: bind
   wordpress_data:
-    driver: local
-    driver_opts:
-      type: none
-      device: /home/${INTRA}/data/volumes/wordpress
-      o: bind
+    # driver: local
+    # driver_opts:
+    #   type: none
+    #   device: /home/${INTRA}/data/volumes/wordpress
+    #   o: bind
   adminer_data:
-    driver: local
-    driver_opts:
-      type: none
-      device: /home/${INTRA}/data/volumes/adminer
-      o: bind
+    # driver: local
+    # driver_opts:
+    #   type: none
+    #   device: /home/${INTRA}/data/volumes/adminer
+    #   o: bind
 
 services:
   wordpress:
